@@ -56,6 +56,8 @@ EdgeOne 中国大陆默认域名需使用有时效的预览链接，当前规则
 
 ## Cloudflare Pages 部署
 
+已上线固定网址：https://animal-mirror-yc.pages.dev/ 。这是完整功能版，启用同一批 100 个正式测评密码；DEMO-2026 不可用。当前网站仅发布静态文件，不使用 Workers 后端、数据库或 Cloudflare Access 登录。
+
 运行 `npm run build:cloudflare`，发布 `dist/`。`wrangler.jsonc` 声明静态产物路径；构建产物中的 `_headers` 为密码文件设置 no-store，为带内容哈希的 JS/CSS 设置长期缓存。
 
 只上传网站构建产物，不上传 private、店主 CSV、离线工具或 Wrangler 登录信息。公开网站包含校验密码用的 SHA-256 哈希，其局限与 GitHub Pages 版本一致。切换到 Cloudflare 不会把当前浏览器次数变成全设备限制，也不会自动迁移其他域名下的浏览器历史。
