@@ -12,7 +12,8 @@
     "pack": "node scripts/package.mjs",
     "build:demo": "tsc --noEmit && vite build --mode demo && node scripts/demo-config.mjs",
     "build:edgeone": "node scripts/prepare-edgeone.mjs && npm run build && node scripts/finalize-edgeone.mjs",
-    "build:pages": "node scripts/prepare-registry.mjs && npm run build && node scripts/finalize-pages.mjs"
+    "build:pages": "node scripts/prepare-registry.mjs && npm run build && node scripts/finalize-pages.mjs",
+    "build:cloudflare": "npm run build:pages && node scripts/finalize-cloudflare.mjs"
   },
   "dependencies": {
     "react": "19.2.6",

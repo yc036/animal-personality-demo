@@ -11,3 +11,5 @@ public/access-codes.json
 .env
 .edgeone/*
 .tef_dist/*
+.wrangler/
+.dev.vars*

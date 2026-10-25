@@ -53,3 +53,13 @@ GitHub 的 `main` 分支用于完整 GitHub Pages 构建；`edgeone` 分支保�
 本次采用官方 CLI 直接上传经过验证的 `dist/`。提交代码不会自动更新这个直接上传项目；后续修改完成后运行测试、正式构建，再通过 `edgeone makers deploy ./dist -n animal-mirror-yc` 更新。CLI 与 Git 仓库导入属于不同的项目类型，不能把直接上传描述为已启用 Git 自动发布。
 
 EdgeOne 中国大陆默认域名需使用有时效的预览链接，当前规则为 3 小时。不要将其导入自动发货。正式营业前需绑定自定义域名；使用中国大陆或全球含中国大陆节点时，域名需符合备案要求。当前保留预览链接的 `eo_token` 与 `eo_time` 供验收及分享测试，链接过期后仍需更新预览入口。自定义域名发布后，用正式域名重新生成自动发货链接。
+
+## Cloudflare Pages 部署
+
+运行 `npm run build:cloudflare`，发布 `dist/`。`wrangler.jsonc` 声明静态产物路径；构建产物中的 `_headers` 为密码文件设置 no-store，为带内容哈希的 JS/CSS 设置长期缓存。
+
+只上传网站构建产物，不上传 private、店主 CSV、离线工具或 Wrangler 登录信息。公开网站包含校验密码用的 SHA-256 哈希，其局限与 GitHub Pages 版本一致。切换到 Cloudflare 不会把当前浏览器次数变成全设备限制，也不会自动迁移其他域名下的浏览器历史。
+
+源码继续保存在本 GitHub 仓库。Cloudflare 首次采用官方 Wrangler CLI 上传，尚未启用 Git 原生集成或 GitHub Actions 自动发布；推送 GitHub 暂时只会更新现有 GitHub Pages 网站。更新 Cloudflare 时重新构建并运行 `wrangler pages deploy dist --project-name animal-mirror-yc --branch main`。如果以后需要 Git 原生集成，Cloudflare 要求创建 Git 集成类型的新项目。
+
+默认 Pages 地址没有腾讯预览链接的 3 小时时效；普通 Cloudflare 全球网络不包含中国大陆节点，中国大陆访问仍经过跨境网络，不能保证比 GitHub Pages 更快或稳定。官方说明：https://developers.cloudflare.com/support/troubleshooting/general-troubleshooting/geographic-traffic-routing/ 。
