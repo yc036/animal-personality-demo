@@ -1,4 +1,4 @@
-name: Deploy static demo to GitHub Pages
+name: Deploy full static assessment to GitHub Pages
 on:
   push:
     branches: [main]
@@ -19,7 +19,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - run: npm run build:demo
+      - name: Build complete static assessment
+        run: npm run build:pages
+        env:
+          ASSESSMENT_CODE_HASHES: ${{ secrets.ASSESSMENT_CODE_HASHES }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

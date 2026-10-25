@@ -34,13 +34,19 @@ Node 22.13+。`npm ci`、`npm test`、`npm run codes -- 100`、`node scripts/bui
 
 站点支持根目录和子目录部署，使用哈希路由，不要求后端重写。保持部署域名和路径稳定，否则浏览器存储的来源发生变化，本地次数和报告记录无法自动继承。
 
-## GitHub Pages 功能演示
+## GitHub Pages 完整功能版
 
-公开仓库用于非商业功能测试。GitHub Actions 只发布 `npm run build:demo` 生成的 dist，演示仅接受公开密码 DEMO-2026，不发布店主 CSV、真实交付密码库或商户工具。演示隐藏好评返现入口，页面有非商业测试标识。国内网络可达性需实测，不保证所有运营商可用。
+网址：https://yc036.github.io/animal-personality-demo/ 。main 分支推送后，GitHub Actions 运行测试和 `npm run build:pages`，发布完整静态功能版。该版本不显示演示标记，不接受 DEMO-2026，不提供演示次数重置按钮，保留正式密码入口、完整报告、长图保存、结果链接、再测一次和好评有礼。
+
+正式密码哈希数组保存在仓库 Actions Secret `ASSESSMENT_CODE_HASHES`，构建时才生成公开静态哈希文件。密码明文、店主 CSV、CLI 凭据和商户工具不会发布。哈希文件本身会随网站公开，这是纯静态校验机制的固有限制，不是可靠的付费鉴权。
+
+更新密码库时，在仓库 Settings → Secrets and variables → Actions 中更新 ASSESSMENT_CODE_HASHES（填入离线工具导出的 hashes 数组），然后在 Actions 手动重新运行发布工作流。只修改本地文件不会自动更新云端密码库。旧密码需要保留时，新的数组必须包含旧哈希。
+
+GitHub 官方限制使用 Pages 运营在线业务、以促成商业交易或提供商业 SaaS 为主要目的的网站。完整功能发布不改变该限制，也不能保证中国大陆各网络可达性；不可将“功能上线”理解为获得平台的商用许可或访问稳定性保证。官方说明：https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits#usage-limits 。
 
 ## 腾讯 EdgeOne Makers 正式静态版
 
-GitHub 的 `main` 分支保留原 GitHub Pages 演示；`edgeone` 分支用于腾讯部署，构建命令是 `npm run build:edgeone`，产物目录为 `dist`。这是纯静态正式构建，保留好评有礼入口，不使用演示密码，也不启用演示次数重置按钮。
+GitHub 的 `main` 分支用于完整 GitHub Pages 构建；`edgeone` 分支保留腾讯部署源代码，构建命令是 `npm run build:edgeone`，产物目录为 `dist`。腾讯网站采用官方 CLI 直接上传，GitHub Pages 的更新不会同时更新腾讯项目。
 
 密码明文 CSV、离线管理工具、CLI 登录凭据和 `private/` 都不会发布到网站或 GitHub。本地构建从 `public/access-codes.json` 读取原有公开哈希文件（此文件不进入 Git）。如果以后选择 Git 仓库自动构建，在 EdgeOne 构建环境变量 `EDGEONE_ACCESS_CODE_HASHES` 中填写现有 JSON 的 `hashes` 数组；构建缺少有效密码库会主动失败，不会发布一个无法登录的网站。
 
