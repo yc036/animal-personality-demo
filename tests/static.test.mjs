@@ -5,8 +5,8 @@ const data=JSON.parse(fs.readFileSync('data/assessment.json','utf8')),answers=Ob
 const memory=()=>{const map=new Map();return{getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,v),clear:()=>map.clear()};};
 test('EdgeOne preview navigation keeps its access parameter without leaking unrelated queries',()=>{
  const {siteUrl}=load('lib/site-url.ts');
- const preview=siteUrl('./','https://example.edgeone.app/?eo_token=a%2Bb&password=private&utm_source=test#/');
- assert.equal(preview.href,'https://example.edgeone.app/?eo_token=a%2Bb');
+ const preview=siteUrl('./','https://example.edgeone.cool/?eo_token=a%2Bb&eo_time=1792927114&password=private&utm_source=test#/');
+ assert.equal(preview.href,'https://example.edgeone.cool/?eo_token=a%2Bb&eo_time=1792927114');
  assert.equal(siteUrl('./','https://yc036.github.io/animal-personality-demo/#/').href,'https://yc036.github.io/animal-personality-demo/');
  assert.equal(siteUrl('./','https://quiz.example.cn/?password=private#/').href,'https://quiz.example.cn/');
 });
