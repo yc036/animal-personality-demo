@@ -6,3 +6,8 @@ public/access-codes.json
 .env*
 *.log
 .edgeone/
+
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*
