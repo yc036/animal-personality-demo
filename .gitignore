@@ -1,0 +1,7 @@
+node_modules/
+dist/
+private/
+outputs/
+public/access-codes.json
+.env*
+*.log
