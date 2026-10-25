@@ -10,7 +10,8 @@
     "test": "node --test tests/*.test.mjs",
     "codes": "node scripts/generate-codes.mjs",
     "pack": "node scripts/package.mjs",
-    "build:demo": "tsc --noEmit && vite build --mode demo && node scripts/demo-config.mjs"
+    "build:demo": "tsc --noEmit && vite build --mode demo && node scripts/demo-config.mjs",
+    "build:edgeone": "node scripts/prepare-edgeone.mjs && npm run build"
   },
   "dependencies": {
     "react": "19.2.6",

@@ -37,3 +37,13 @@ Node 22.13+。`npm ci`、`npm test`、`npm run codes -- 100`、`node scripts/bui
 ## GitHub Pages 功能演示
 
 公开仓库用于非商业功能测试。GitHub Actions 只发布 `npm run build:demo` 生成的 dist，演示仅接受公开密码 DEMO-2026，不发布店主 CSV、真实交付密码库或商户工具。演示隐藏好评返现入口，页面有非商业测试标识。国内网络可达性需实测，不保证所有运营商可用。
+
+## 腾讯 EdgeOne Makers 正式静态版
+
+GitHub 的 `main` 分支保留原 GitHub Pages 演示；`edgeone` 分支用于腾讯部署，构建命令是 `npm run build:edgeone`，产物目录为 `dist`。这是纯静态正式构建，保留好评有礼入口，不使用演示密码，也不启用演示次数重置按钮。
+
+密码明文 CSV、离线管理工具、CLI 登录凭据和 `private/` 都不会发布到网站或 GitHub。本地构建从 `public/access-codes.json` 读取原有公开哈希文件（此文件不进入 Git）。如果以后选择 Git 仓库自动构建，在 EdgeOne 构建环境变量 `EDGEONE_ACCESS_CODE_HASHES` 中填写现有 JSON 的 `hashes` 数组；构建缺少有效密码库会主动失败，不会发布一个无法登录的网站。
+
+本次采用官方 CLI 直接上传经过验证的 `dist/`。提交代码不会自动更新这个直接上传项目；后续修改完成后运行测试、正式构建，再通过 `edgeone makers deploy ./dist -n animal-mirror-yc` 更新。CLI 与 Git 仓库导入属于不同的项目类型，不能把直接上传描述为已启用 Git 自动发布。
+
+EdgeOne 中国大陆默认域名需使用有时效的预览链接，当前规则为 3 小时。不要将其导入自动发货。正式营业前需绑定自定义域名；使用中国大陆或全球含中国大陆节点时，域名需符合备案要求。当前保留预览链接的 `eo_token` 供验收及分享测试，链接过期后仍需更新预览入口。自定义域名发布后，用正式域名重新生成自动发货链接。

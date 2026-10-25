@@ -5,3 +5,4 @@ outputs/
 public/access-codes.json
 .env*
 *.log
+.edgeone/

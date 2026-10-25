@@ -3,6 +3,13 @@ const load=entry=>{const code=buildSync({entryPoints:[entry],bundle:true,platfor
 const{sha256}=load('lib/hash.ts'),{createLocalEngine}=load('lib/local-engine.ts'),{encodeReport,decodeReport}=load('lib/sharing.ts');
 const data=JSON.parse(fs.readFileSync('data/assessment.json','utf8')),answers=Object.fromEntries(data.questions.map(q=>[q.id,q.options[0].id]));
 const memory=()=>{const map=new Map();return{getItem:k=>map.get(k)??null,setItem:(k,v)=>map.set(k,v),clear:()=>map.clear()};};
+test('EdgeOne preview navigation keeps its access parameter without leaking unrelated queries',()=>{
+ const {siteUrl}=load('lib/site-url.ts');
+ const preview=siteUrl('./','https://example.edgeone.app/?eo_token=a%2Bb&password=private&utm_source=test#/');
+ assert.equal(preview.href,'https://example.edgeone.app/?eo_token=a%2Bb');
+ assert.equal(siteUrl('./','https://yc036.github.io/animal-personality-demo/#/').href,'https://yc036.github.io/animal-personality-demo/');
+ assert.equal(siteUrl('./','https://quiz.example.cn/?password=private#/').href,'https://quiz.example.cn/');
+});
 test('LAN HTTP SHA-256 fallback matches standard Node hashes including Chinese and long strings',()=>{for(const value of['','abc','AN-ABCDE-FGHIJ','反差动物人格','a'.repeat(1000),'🙂'.repeat(100)])assert.equal(sha256(value),crypto.createHash('sha256').update(value).digest('hex'));});
 test('local-only quota charges completed reports, survives reloads, and retries do not charge twice',async()=>{
  const storage=memory(),code='AN-ABCDE-FGHIJ',registry=async()=>new Set([sha256(code)]),random=()=>crypto.randomBytes(16).toString('hex');let engine=createLocalEngine(storage,registry,random);
